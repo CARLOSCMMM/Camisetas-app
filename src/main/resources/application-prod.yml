@@ -1,0 +1,8 @@
+logging:
+  level:
+    org.springframework.web: WARN
+    org.springframework.data.mongodb: WARN
+
+app:
+  cors:
+    allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:https://localhost}
