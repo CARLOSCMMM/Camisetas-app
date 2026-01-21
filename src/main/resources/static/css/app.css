@@ -1,1 +1,11 @@
+/* app.css */
 
+body {
+  min-height: 100vh;
+}
+
+#alerta {
+  position: sticky;
+  top: 1rem;
+  z-index: 1020;
+}
