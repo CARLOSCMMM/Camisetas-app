@@ -2,10 +2,17 @@ package com.iesvdc.dam.acceso.model;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@NoArgsConstructor
+@Data
+@Document(collection = "horarios")
 public class Horario {
 
   @NotNull(message = "dia es obligatorio")

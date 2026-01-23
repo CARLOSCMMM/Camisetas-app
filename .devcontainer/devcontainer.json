@@ -19,6 +19,5 @@
         "redhat.vscode-yaml"
       ]
     }
-  },
-  "postCreateCommand": "sudo chown -R vscode:vscode /home/vscode/.m2 && ./mvnw -q -DskipTests compile"
+  }
 }
