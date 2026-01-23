@@ -1,6 +1,7 @@
 package com.iesvdc.dam.acceso.model;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Document(collection = "instalaciones")
 public class Instalacion {
 
