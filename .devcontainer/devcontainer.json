@@ -4,9 +4,6 @@
   "service": "app",
   "workspaceFolder": "/workspace",
   "shutdownAction": "stopCompose",
-  "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {"moby": false}
-  },
   "customizations": {
     "vscode": {
       "extensions": [
