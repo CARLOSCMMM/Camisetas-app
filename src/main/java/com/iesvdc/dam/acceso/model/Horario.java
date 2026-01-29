@@ -17,8 +17,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "horarios")
 public class Horario {
 
-  @NotNull(message = "dia es obligatorio")
-  private LocalDate dia;
 
   @NotNull(message = "horaInicio es obligatoria")
   private LocalTime horaInicio;
