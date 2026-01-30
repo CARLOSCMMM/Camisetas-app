@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @NoArgsConstructor
@@ -17,6 +18,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "horarios")
 public class Horario {
 
+  @Id
+  private String id;
 
   @NotNull(message = "horaInicio es obligatoria")
   private LocalTime horaInicio;
@@ -26,5 +29,5 @@ public class Horario {
 
   @NotNull(message = "instalacionSnapshot es obligatorio")
   @Valid
-  private InstalacionSnapshot instalacionSnapshot;
+  private Instalacion instalacion;
 }

@@ -25,4 +25,7 @@ public class Usuario {
   @NotBlank(message = "email es obligatorio")
   @Email(message = "email no válido")
   private String email;
+
+  @NotBlank(message = "la contraseña es obligatoria")
+  private String saltedPasssword;
 }
