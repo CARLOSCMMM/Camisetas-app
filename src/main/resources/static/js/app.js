@@ -3,7 +3,8 @@
 const API = {
   instalaciones: "/api/instalaciones",
   usuarios: "/api/usuarios",
-  reservas: "/api/reservas"
+  reservas: "/api/reservas",
+  horarios: "api/horarios"
 };
 
 $(document).ready(function () {
@@ -24,6 +25,11 @@ function wireEvents() {
   $("#formUsuario").on("submit", function (e) {
     e.preventDefault();
     crearUsuario();
+  });
+
+  $("#formHorario").on("submit", function (e) {
+    e.preventDefault();
+    crearHorario();
   });
 
   $("#formReserva").on("submit", function (e) {
@@ -129,10 +135,12 @@ function rellenarSelectInstalaciones(instalaciones) {
   // Selects: filtros y alta
   $("#filtroInstalacion").html(`<option value="">Todas</option>${opts}`);
   $("#resInstalacion").html(`<option value="" disabled selected>Seleccione...</option>${opts}`);
+  $("#horInstalacion").html(`<option value="" disabled selected>Seleccione...</option>${opts}`);
 }
 
 function crearInstalacion() {
   const payload = {
+    id: $("#instID").val().trim(),
     nombre: $("#instNombre").val().trim(),
     direccion: $("#instDireccion").val().trim(),
     ciudad: $("#instCiudad").val().trim()
@@ -151,6 +159,46 @@ function crearInstalacion() {
     })
     .fail(function (xhr) {
       showAlert("danger", parseApiError(xhr, "Error creando instalación"));
+    });
+}
+
+/* =========================
+   Instalaciones
+   ========================= */
+
+
+function cargarHorarios() {
+  return $.getJSON(API.instalaciones)
+    .done(function (data) {
+      renderHorarios(data);
+      rellenarSelectInstalaciones(data);
+    })
+    .fail(function (xhr) {
+      showAlert("danger", parseApiError(xhr, "Error cargando instalaciones"));
+    });
+}
+
+function crearHorario() {
+  const payload = {
+    //id: $("#instID").val().trim(),
+    instalacion: $("#horInstalacion").val(),
+    horaInicio: $("#horHoraInicio").val(),
+    horaFin: $("#horHoraFin").val(),
+  };
+
+  $.ajax({
+    url: API.horarios,
+    method: "POST",
+    contentType: "application/json",
+    data: JSON.stringify(payload)
+  })
+    .done(function () {
+      showAlert("success", "Horario creado");
+      $("#formInstalacion")[0].reset();
+      cargarHorarios().done(cargarReservasConFiltros);
+    })
+    .fail(function (xhr) {
+      showAlert("danger", parseApiError(xhr, "Error creando horario"));
     });
 }
 

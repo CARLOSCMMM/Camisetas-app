@@ -41,6 +41,10 @@
 
         <form id="formInstalacion" class="row g-2 align-items-end">
           <div class="col-md-4">
+            <label class="form-label">ID</label>
+            <input id="instID" class="form-control">
+          </div>
+          <div class="col-md-4">
             <label class="form-label">Nombre</label>
             <input id="instNombre" class="form-control" required>
           </div>
@@ -73,6 +77,33 @@
           </table>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Horarios -->
+  <section id="horarios" class="mb-4">
+    <div class="card shadow-sm">
+      <div class="card-header fw-semibold">Horarios</div>
+      <div class="card-body">
+        <form id="formHorario" class="row g-2 align-items-end">
+          <div class="col-md-4">
+            <label class="form-label">Instalación</label>
+            <select id="horInstalacion" class="form-select" required></select>
+          </div>
+          <div class="col-md-1">
+            <label class="form-label">Inicio</label>
+            <input id="horHoraInicio" type="time" class="form-control" required>
+          </div>
+          <div class="col-md-1">
+            <label class="form-label">Fin</label>
+            <input id="horHoraFin" type="time" class="form-control" required>
+          </div>
+          <div class="col-md-1 d-grid">
+            <button class="btn btn-primary" type="submit">Añadir</button>
+          </div>
+        </form>
       </div>
     </div>
   </section>
@@ -161,14 +192,7 @@
             <label class="form-label">Día</label>
             <input id="resDia" type="date" class="form-control" required>
           </div>
-          <div class="col-md-1">
-            <label class="form-label">Inicio</label>
-            <input id="resHoraInicio" type="time" class="form-control" required>
-          </div>
-          <div class="col-md-1">
-            <label class="form-label">Fin</label>
-            <input id="resHoraFin" type="time" class="form-control" required>
-          </div>
+          
           <div class="col-12 d-grid mt-2">
             <button class="btn btn-success" type="submit">Crear reserva</button>
           </div>
