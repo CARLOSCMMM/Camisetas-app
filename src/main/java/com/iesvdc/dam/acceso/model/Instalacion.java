@@ -26,5 +26,13 @@ public class Instalacion {
   @NotBlank(message = "ciudad es obligatoria")
   private String ciudad;
 
+  // Constructor necesario para maestro-detalle Horario->Instalación
+  public Instalacion(String id){
+    this.id=id;
+    this.nombre="Instalación sin nombre";
+    this.direccion="Instalación sin dirección";
+    this.ciudad="Instalación sin ciudad";
+  }
+
 }
 
