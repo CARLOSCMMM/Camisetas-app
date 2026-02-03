@@ -36,22 +36,23 @@ public class HorarioController {
         return horarioService.findAll();
     }
 
+    /**
+     * Precondiciones: Al crear un horario no se puede solapar con horarios existentes
+     * para la instalación a la que le estamos asignando ese horario.
+     * @param horario Da de alta un nuevo horario para la instalación que contiene
+     * @return El mismo horario pero con los ObjectID nuevos de la BBDD
+     */
     @PostMapping({"","/"})
     @ResponseStatus(HttpStatus.CREATED)
     public Horario save(
         @RequestBody Horario horario){
         try {            
             Optional<Instalacion> inst = instalacionService.findById(horario.getInstalacion().getId());
-            if (inst.isPresent()) {
-                horario.setInstalacion(inst.get());                
-                return horarioService.save(horario);
-            } else {
-                // error
-                throw new NotFoundException(
-                    "Instalación no encontrada.");
-            }
+            horario.setInstalacion(inst.get());
+            return horarioService.save(horario);
         } catch (Exception e) {
-            throw new BadRequestException("Formato de hora inválido.");
+            throw new NotFoundException(
+                    "Instalación no encontrada.");
         }
         
     }
