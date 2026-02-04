@@ -19,15 +19,21 @@ public class HorarioService {
     }
 
     public Horario save(Horario horario){
-        if (!horarioRepository.existsByInstalacion_IdAndHoraInicioGreaterThanEqualAndHoraFinLessThanEqual(
+        if (horarioRepository.existsByInstalacion_IdAndHoraInicioLessThanAndHoraFinGreaterThan(
             horario.getInstalacion().getId(),
             horario.getHoraInicio(),
-            horario.getHoraFin())) {
-
-            return horarioRepository.save(horario);
-        } else {
-            throw new ConflictException("No se pueden solapar horarios en la misma instalación");
+            horario.getHoraInicio())
+            |
+            horarioRepository.existsByInstalacion_IdAndHoraInicioLessThanEqualAndHoraFinGreaterThanEqual(
+            horario.getInstalacion().getId(),
+            horario.getHoraFin(),
+            horario.getHoraFin()) 
+        ) {
+            throw new ConflictException("No se pueden solapar horarios en la misma instalación");                
+        } else {              
+            return horarioRepository.save(horario);                       
         }
     }
+    
 
 }

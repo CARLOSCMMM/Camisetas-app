@@ -45,15 +45,11 @@ public class HorarioController {
     @ResponseStatus(HttpStatus.CREATED)
     public Horario save(
         @RequestBody Horario horario){
-        try {            
-            Optional<Instalacion> inst = instalacionService.findById(horario.getInstalacion().getId());
-            horario.setInstalacion(inst.get());
-            return horarioService.save(horario);
-        } catch (Exception e) {
-            throw new NotFoundException(
-                    "Instalación no encontrada.");
-        }
         
+        Optional<Instalacion> inst = instalacionService.findById(horario.getInstalacion().getId());
+        horario.setInstalacion(inst.get());
+        return horarioService.save(horario);
+    
     }
 
 }

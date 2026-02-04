@@ -15,9 +15,27 @@ public interface HorarioRepository extends MongoRepository<Horario, String>{
 
    
     // Buscar instalaciones entre dos horas concretas */
-    boolean existsByInstalacion_IdAndHoraInicioGreaterThanEqualAndHoraFinLessThanEqual(
-      String instalacionId,      
-      LocalTime horaInicio,
-      LocalTime horaFin
-  );
+    boolean existsByInstalacion_IdAndHoraInicioLessThanEqualAndHoraFinGreaterThanEqual(
+        String instalacionId,      
+        LocalTime horaInicio,
+        LocalTime horaFin
+    );
+
+    boolean existsByInstalacion_IdAndHoraInicioLessThanAndHoraFinGreaterThan(
+        String instalacionId,      
+        LocalTime horaInicio,
+        LocalTime horaFin
+    );
+
+    boolean existsByInstalacion_IdAndHoraInicioLessThanAndHoraFinGreaterThanEqual(
+        String instalacionId,      
+        LocalTime horaInicio,
+        LocalTime horaFin
+    );
+
+    boolean existsByInstalacion_IdAndHoraInicioLessThanEqualAndHoraFinGreaterThan(
+        String instalacionId,      
+        LocalTime horaInicio,
+        LocalTime horaFin
+    );
 }

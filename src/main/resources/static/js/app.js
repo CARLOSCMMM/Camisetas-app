@@ -78,7 +78,7 @@ function escapeHtml(s) {
    ========================= */
 
 function cargarTodo() {
-  $.when(cargarInstalaciones(), cargarUsuarios())
+  $.when(cargarInstalaciones(), cargarUsuarios(), cargarHorarios())
     .done(function () {
       cargarReservas();
     })
@@ -163,18 +163,19 @@ function crearInstalacion() {
 }
 
 /* =========================
-   Instalaciones
+   horarios
    ========================= */
 
 
 function cargarHorarios() {
-  return $.getJSON(API.instalaciones)
+  return $.getJSON(API.horarios)
     .done(function (data) {
-      renderHorarios(data);
+      $('#tablaHorarios').empty();
+      $('#tablaHorarios').append(renderHorarios(data));
       rellenarSelectInstalaciones(data);
     })
     .fail(function (xhr) {
-      showAlert("danger", parseApiError(xhr, "Error cargando instalaciones"));
+      showAlert("danger", parseApiError(xhr, "Error cargando horarios"));
     });
 }
 
@@ -194,13 +195,32 @@ function crearHorario() {
   })
     .done(function () {
       showAlert("success", "Horario creado");
-      $("#formInstalacion")[0].reset();
-      cargarHorarios().done(cargarReservasConFiltros);
+      $("#formHorario")[0].reset();
+      cargarHorarios();
     })
     .fail(function (xhr) {
       showAlert("danger", parseApiError(xhr, "Error creando horario"));
     });
 }
+
+
+function renderHorarios(horarios) {
+  const rows = (horarios || []).map(function (h) {
+    return `
+      <tr>
+        <td>${escapeHtml(h.instalacion.nombre)}</td>
+        <td>${escapeHtml(h.horaInicio)}</td>
+        <td>${escapeHtml(h.horaFin)}</td>
+        <td class="text-end">
+          <button class="btn btn-sm btn-outline-danger" data-action="del-inst" data-id="${h.id}">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
 
 function eliminarInstalacion(id) {
   if (!confirm("¿Eliminar la instalación?")) return;
