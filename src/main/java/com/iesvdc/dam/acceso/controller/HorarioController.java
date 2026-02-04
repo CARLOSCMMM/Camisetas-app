@@ -14,7 +14,6 @@ import com.iesvdc.dam.acceso.model.Horario;
 import com.iesvdc.dam.acceso.model.Instalacion;
 import com.iesvdc.dam.acceso.service.HorarioService;
 import com.iesvdc.dam.acceso.service.InstalacionService;
-import com.iesvdc.dam.acceso.web.BadRequestException;
 import com.iesvdc.dam.acceso.web.NotFoundException;
 
 import org.springframework.web.bind.annotation.PostMapping;

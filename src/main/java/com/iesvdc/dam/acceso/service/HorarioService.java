@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.iesvdc.dam.acceso.model.Horario;
 import com.iesvdc.dam.acceso.repository.HorarioRepository;
+import com.iesvdc.dam.acceso.web.ConflictException;
 
 @Service
 public class HorarioService {
@@ -18,9 +19,15 @@ public class HorarioService {
     }
 
     public Horario save(Horario horario){
-        return horarioRepository.save(horario);
-    }
+        if (!horarioRepository.existsByInstalacion_IdAndHoraInicioGreaterThanEqualAndHoraFinLessThanEqual(
+            horario.getInstalacion().getId(),
+            horario.getHoraInicio(),
+            horario.getHoraFin())) {
 
-    
+            return horarioRepository.save(horario);
+        } else {
+            throw new ConflictException("No se pueden solapar horarios en la misma instalación");
+        }
+    }
 
 }

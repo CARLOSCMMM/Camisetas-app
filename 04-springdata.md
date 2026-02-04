@@ -371,6 +371,8 @@ public interface ReservaRepository extends MongoRepository<Reserva, String> {
 }
 ```
 
+Para más información sobre métodos ed MongoRepository, acudir a su Web: <https://docs.spring.io/spring-data/mongodb/reference/mongodb/repositories/query-methods.html>.
+
 ### Consideraciones de consulta y modelado
 
 #### Consultar por datos embebidos
