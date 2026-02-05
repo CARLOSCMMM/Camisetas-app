@@ -25,6 +25,9 @@ public class InstalacionService {
     }
 
     public Instalacion save(Instalacion instalacion){
+        if (instalacion.getId().length()<5) {
+            instalacion.setId(null);
+        }
         return instalacionRepository.save(instalacion);
     }
 
