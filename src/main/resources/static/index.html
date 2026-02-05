@@ -103,15 +103,15 @@
       <div class="card-header fw-semibold">Horarios</div>
       <div class="card-body">
         <form id="formHorario" class="row g-2 align-items-end">
-          <div class="col-md-4">
+          <div class="col-md-5">
             <label class="form-label">Instalación</label>
             <select id="horInstalacion" class="form-select" required></select>
           </div>
-          <div class="col-md-1">
+          <div class="col-md-2">
             <label class="form-label">Inicio</label>
             <input id="horHoraInicio" min="00:00:00" max="23:59:59" type="time" class="form-control" required>
           </div>
-          <div class="col-md-1">
+          <div class="col-md-2">
             <label class="form-label">Fin</label>
             <input id="horHoraFin" type="time" class="form-control" required>
           </div>
@@ -145,13 +145,17 @@
       <div class="card-body">
 
         <form id="formUsuario" class="row g-2 align-items-end">
-          <div class="col-md-5">
+          <div class="col-md-3">
             <label class="form-label">Nombre</label>
             <input id="userNombre" class="form-control" required>
           </div>
-          <div class="col-md-5">
+          <div class="col-md-4">
             <label class="form-label">Email</label>
             <input id="userEmail" type="email" class="form-control" required>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Password</label>
+            <input id="userPassword" type="password" class="form-control" required>
           </div>
           <div class="col-md-2 d-grid">
             <button class="btn btn-primary" type="submit">Añadir</button>
@@ -183,31 +187,7 @@
       <div class="card-header fw-semibold">Reservas</div>
       <div class="card-body">
 
-        <!-- Filtros -->
-        <form id="formFiltroReservas" class="row g-2 align-items-end">
-          <div class="col-md-4">
-            <label class="form-label">Usuario</label>
-            <select id="filtroUsuario" class="form-select">
-              <option value="">Todos</option>
-            </select>
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Instalación</label>
-            <select id="filtroInstalacion" class="form-select">
-              <option value="">Todas</option>
-            </select>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">Día</label>
-            <input id="filtroDia" type="date" class="form-control">
-          </div>
-          <div class="col-md-1 d-grid">
-            <button class="btn btn-outline-secondary" type="submit">Filtrar</button>
-          </div>
-        </form>
-
-        <hr>
-
+        
         <!-- Alta de reserva -->
         <form id="formReserva" class="row g-2 align-items-end">
           <div class="col-md-4">
@@ -215,8 +195,8 @@
             <select id="resUsuario" class="form-select" required></select>
           </div>
           <div class="col-md-4">
-            <label class="form-label">Instalación</label>
-            <select id="resInstalacion" class="form-select" required></select>
+            <label class="form-label">Horario</label>
+            <select id="resHorario" class="form-select" required></select>
           </div>
           <div class="col-md-2">
             <label class="form-label">Día</label>

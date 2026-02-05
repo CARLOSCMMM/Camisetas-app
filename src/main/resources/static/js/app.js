@@ -33,11 +33,6 @@ function wireEvents() {
     crearReserva();
   });
 
-  $("#formFiltroReservas").on("submit", function (e) {
-    e.preventDefault();
-    cargarReservasConFiltros();
-  });
-
   $("#menu_horarios").on("click", function (e) {
     cargarHorarios();
   });
@@ -155,7 +150,7 @@ function crearInstalacion() {
     .done(function () {
       showAlert("success", "Instalación creada");
       $("#formInstalacion")[0].reset();
-      cargarInstalaciones().done(cargarReservasConFiltros);
+      cargarInstalaciones();
     })
     .fail(function (xhr) {
       showAlert("danger", parseApiError(xhr, "Error creando instalación"));
@@ -188,6 +183,11 @@ function cargarHorarios() {
             </tr>
           `})
       );
+      // Delegación de eventos para botones generados dinámicamente
+      $("#tablaHorarios button[data-action='del-inst']").off("click").on("click", function () {
+        const id = $(this).data("id");
+        eliminarHorario(id);
+      });
     })
     .fail(function (xhr) {
       showAlert("danger", parseApiError(xhr, "Error cargando horarios"));
@@ -219,37 +219,21 @@ function crearHorario() {
 }
 
 
-function renderHorarios(horarios) {
-  const rows = (horarios || []).map(function (h) {
-    return `
-      <tr>
-        <td>${escapeHtml(h.instalacion.nombre)}</td>
-        <td>${escapeHtml(h.horaInicio)}</td>
-        <td>${escapeHtml(h.horaFin)}</td>
-        <td class="text-end">
-          <button class="btn btn-sm btn-outline-danger" data-action="del-inst" data-id="${h.id}">
-            Eliminar
-          </button>
-        </td>
-      </tr>
-    `;
-  });
-}
 
 
-function eliminarInstalacion(id) {
-  if (!confirm("¿Eliminar la instalación?")) return;
+function eliminarHorario(id) {
+  if (!confirm("¿Eliminar el horario?")) return;
 
   $.ajax({
-    url: `${API.instalaciones}/${id}`,
+    url: `${API.horarios}/${id}`,
     method: "DELETE"
   })
     .done(function () {
-      showAlert("success", "Instalación eliminada");
-      cargarInstalaciones().done(cargarReservasConFiltros);
+      showAlert("success", "Horario eliminado");
+      cargarHorarios();
     })
     .fail(function (xhr) {
-      showAlert("danger", parseApiError(xhr, "Error eliminando instalación"));
+      showAlert("danger", parseApiError(xhr, "Error eliminando Horario"));
     });
 }
 
@@ -303,7 +287,8 @@ function rellenarSelectUsuarios(usuarios) {
 function crearUsuario() {
   const payload = {
     nombre: $("#userNombre").val().trim(),
-    email: $("#userEmail").val().trim()
+    email: $("#userEmail").val().trim(),
+    password: $("#userPassword").val().trim()
   };
 
   $.ajax({
@@ -315,7 +300,7 @@ function crearUsuario() {
     .done(function () {
       showAlert("success", "Usuario creado");
       $("#formUsuario")[0].reset();
-      cargarUsuarios().done(cargarReservasConFiltros);
+      cargarUsuarios();
     })
     .fail(function (xhr) {
       showAlert("danger", parseApiError(xhr, "Error creando usuario"));
@@ -331,7 +316,7 @@ function eliminarUsuario(id) {
   })
     .done(function () {
       showAlert("success", "Usuario eliminado");
-      cargarUsuarios().done(cargarReservasConFiltros);
+      cargarUsuarios();
     })
     .fail(function (xhr) {
       showAlert("danger", parseApiError(xhr, "Error eliminando usuario"));
@@ -349,28 +334,6 @@ function cargarReservas() {
     })
     .fail(function (xhr) {
       showAlert("danger", parseApiError(xhr, "Error cargando reservas"));
-    });
-}
-
-function cargarReservasConFiltros() {
-  const usuarioId = $("#filtroUsuario").val();
-  const instalacionId = $("#filtroInstalacion").val();
-  const dia = $("#filtroDia").val();
-
-  const params = {};
-  if (usuarioId) params.usuarioId = usuarioId;
-  if (instalacionId) params.instalacionId = instalacionId;
-  if (dia) params.dia = dia;
-
-  const query = $.param(params);
-  const url = query ? `${API.reservas}?${query}` : API.reservas;
-
-  return $.getJSON(url)
-    .done(function (data) {
-      renderReservas(data);
-    })
-    .fail(function (xhr) {
-      showAlert("danger", parseApiError(xhr, "Error filtrando reservas"));
     });
 }
 
@@ -392,7 +355,6 @@ function crearReserva() {
     .done(function () {
       showAlert("success", "Reserva creada");
       $("#formReserva")[0].reset();
-      cargarReservasConFiltros();
     })
     .fail(function (xhr) {
       // 409 típico por solape, 400 por validación, 404 por usuario/instalación inexistente
@@ -409,7 +371,6 @@ function eliminarReserva(id) {
   })
     .done(function () {
       showAlert("success", "Reserva eliminada");
-      cargarReservasConFiltros();
     })
     .fail(function (xhr) {
       showAlert("danger", parseApiError(xhr, "Error eliminando reserva"));

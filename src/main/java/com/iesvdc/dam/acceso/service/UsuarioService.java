@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.iesvdc.dam.acceso.model.Usuario;
 import com.iesvdc.dam.acceso.repository.UsuarioRepository;
+import com.iesvdc.dam.acceso.web.BadRequestException;
+// import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
 public class UsuarioService {
@@ -24,7 +26,16 @@ public class UsuarioService {
     }
 
     public Usuario add(Usuario usuario){        
+        // usuario.setPassword(new BCryptPasswordEncoder().encode(usuario.getPassword()));
         return usuarioRepository.save(usuario);
+    }
+
+    public void deleteById(String id) {
+        try {
+            usuarioRepository.deleteById(id);
+        } catch (Exception e) {            
+            throw new BadRequestException("Error eliminando usuario. El ID es obligatorio");
+        }
     }
 
 }

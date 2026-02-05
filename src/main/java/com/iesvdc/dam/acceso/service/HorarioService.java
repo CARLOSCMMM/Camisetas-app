@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.iesvdc.dam.acceso.model.Horario;
 import com.iesvdc.dam.acceso.repository.HorarioRepository;
+import com.iesvdc.dam.acceso.web.BadRequestException;
 import com.iesvdc.dam.acceso.web.ConflictException;
 
 @Service
@@ -35,5 +36,11 @@ public class HorarioService {
         }
     }
     
-
+    public void deleteById(String id) {
+        try {
+            horarioRepository.deleteById(id);
+        } catch(Exception e) {
+            throw new BadRequestException("El horario a borrar es obligatorio, no puede ser null.");
+        }
+    }
 }
