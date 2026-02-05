@@ -7,10 +7,6 @@ const API = {
   horarios: "api/horarios"
 };
 
-$(document).ready(function () {
-  wireEvents();
-  cargarTodo();
-});
 
 /* =========================
    Eventos de formularios
@@ -40,6 +36,10 @@ function wireEvents() {
   $("#formFiltroReservas").on("submit", function (e) {
     e.preventDefault();
     cargarReservasConFiltros();
+  });
+
+  $("#menu_horarios").on("click", function (e) {
+    cargarHorarios();
   });
 }
 
@@ -168,11 +168,26 @@ function crearInstalacion() {
 
 
 function cargarHorarios() {
+  console.log("recargando horarios...")
   return $.getJSON(API.horarios)
     .done(function (data) {
       $('#tablaHorarios').empty();
-      $('#tablaHorarios').append(renderHorarios(data));
-      rellenarSelectInstalaciones(data);
+      console.log(data);      
+      $('#tablaHorarios').append(
+        (data || []).map(function (horario) {
+          return `
+            <tr>
+              <td>${escapeHtml(horario.instalacion.nombre)}</td>
+              <td>${escapeHtml(horario.horaInicio)}</td>
+              <td>${escapeHtml(horario.horaFin)}</td>
+              <td class="text-end">
+                <button class="btn btn-sm btn-outline-danger" data-action="del-inst" data-id="${horario.id}">
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          `})
+      );
     })
     .fail(function (xhr) {
       showAlert("danger", parseApiError(xhr, "Error cargando horarios"));
@@ -218,7 +233,7 @@ function renderHorarios(horarios) {
         </td>
       </tr>
     `;
-  }).join("");
+  });
 }
 
 

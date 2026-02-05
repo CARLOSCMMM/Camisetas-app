@@ -14,7 +14,7 @@ import java.util.List;
 
 @Configuration
 public class MongoTimeConfig {
-/*
+
   @Bean
   public MongoCustomConversions mongoCustomConversions() {
     @SuppressWarnings({"rawtypes", "unchecked"})
@@ -35,5 +35,5 @@ public class MongoTimeConfig {
     @Override public LocalTime convert(@NonNull String source) {
       return LocalTime.parse(source);
     }
-  }*/
+  }
 }
