@@ -27,6 +27,12 @@ public class Horario {
   private LocalTime horaFin;
 
   @NotNull(message = "instalacionSnapshot es obligatorio")
-  @Valid
   private Instalacion instalacion;
+
+  public Horario(String id){
+    this.id=id;
+    horaInicio=LocalTime.now();
+    horaFin=LocalTime.now();
+    instalacion=new Instalacion();
+  }
 }

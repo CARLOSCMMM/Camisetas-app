@@ -36,6 +36,10 @@ function wireEvents() {
   $("#menu_horarios").on("click", function (e) {
     cargarHorarios();
   });
+
+ $("#menu_reservas").on("click", function (e) {
+    cargarReservas();
+ });
 }
 
 /* =========================
@@ -163,11 +167,10 @@ function crearInstalacion() {
 
 
 function cargarHorarios() {
-  console.log("recargando horarios...")
   return $.getJSON(API.horarios)
     .done(function (data) {
       $('#tablaHorarios').empty();
-      console.log(data);      
+      console.log(data);
       $('#tablaHorarios').append(
         (data || []).map(function (horario) {
           return `
@@ -188,6 +191,7 @@ function cargarHorarios() {
         const id = $(this).data("id");
         eliminarHorario(id);
       });
+      rellenarSelectHorarios(data);
     })
     .fail(function (xhr) {
       showAlert("danger", parseApiError(xhr, "Error cargando horarios"));
@@ -217,9 +221,6 @@ function crearHorario() {
       showAlert("danger", parseApiError(xhr, "Error creando horario"));
     });
 }
-
-
-
 
 function eliminarHorario(id) {
   if (!confirm("¿Eliminar el horario?")) return;
@@ -328,6 +329,7 @@ function eliminarUsuario(id) {
    ========================= */
 
 function cargarReservas() {
+
   return $.getJSON(API.reservas)
     .done(function (data) {
       renderReservas(data);
@@ -340,11 +342,11 @@ function cargarReservas() {
 function crearReserva() {
   const payload = {
     usuarioId: $("#resUsuario").val(),
-    instalacionId: $("#resInstalacion").val(),
-    dia: $("#resDia").val(),
-    horaInicio: $("#resHoraInicio").val(),
-    horaFin: $("#resHoraFin").val()
+    horario: $("#resHorario").val(),
+    fechaReserva: $("#resDia").val(),   
   };
+
+  payload.horario.id =  $("#resHorario").val();
 
   $.ajax({
     url: API.reservas,
@@ -355,6 +357,7 @@ function crearReserva() {
     .done(function () {
       showAlert("success", "Reserva creada");
       $("#formReserva")[0].reset();
+      cargarReservas();
     })
     .fail(function (xhr) {
       // 409 típico por solape, 400 por validación, 404 por usuario/instalación inexistente
@@ -371,6 +374,7 @@ function eliminarReserva(id) {
   })
     .done(function () {
       showAlert("success", "Reserva eliminada");
+      cargarReservas();
     })
     .fail(function (xhr) {
       showAlert("danger", parseApiError(xhr, "Error eliminando reserva"));
@@ -381,12 +385,10 @@ function renderReservas(reservas) {
   const usuariosMap = construirUsuariosMap();
   const rows = (reservas || []).map(function (r) {
     const h = r.horario || {};
-    const snap = h.instalacionSnapshot || {};
     const usuarioNombre = usuariosMap.get(r.usuarioId) || r.usuarioId;
-
-    const dia = h.dia || "";
+    const dia = r.fechaReserva || "";
     const tramo = `${h.horaInicio || ""} - ${h.horaFin || ""}`;
-    const instalacion = snap.nombre ? `${snap.nombre} (${snap.ciudad || ""})` : (snap.instalacionId || "");
+    const instalacion = `${h.instalacion.nombre} (${h.instalacion.ciudad || ""})`;
 
     return `
       <tr>
@@ -409,6 +411,16 @@ function renderReservas(reservas) {
     const id = $(this).data("id");
     eliminarReserva(id);
   });
+}
+
+function rellenarSelectHorarios(data) {
+  $("#resHorario").html(`<option value="" disabled selected>Seleccione...</option>` +
+    (data || []).map(h => {
+      const instalacion = h.instalacion.nombre || {};      
+      const tramo = `${h.horaInicio || ""} - ${h.horaFin || ""}`;
+      return `<option value="${h.id}">${escapeHtml(instalacion)} | ${escapeHtml(tramo)}</option>`;
+    }).join("")
+  );
 }
 
 /* =========================

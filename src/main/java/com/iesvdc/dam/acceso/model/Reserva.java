@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.Instant;
+
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,7 +23,7 @@ public class Reserva {
   private String id;
 
   @NotNull(message = "fechaReserva es obligatoria")
-  private Instant fechaReserva;
+  private LocalDate fechaReserva;
 
   @NotNull(message = "horario es obligatorio")
   @Valid
