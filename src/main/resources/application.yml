@@ -5,9 +5,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo:27017/${MONGO_DB}?authSource=admin
-  profiles:
-    active: ${SPRING_PROFILES_ACTIVE:dev}
+      uri: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@${MONGO_HOST:localhost}:27017/${MONGO_DB}?authSource=admin
 
 
     
