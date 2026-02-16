@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.iesvdc.dam.acceso.model.Usuario;
 import com.iesvdc.dam.acceso.repository.UsuarioRepository;
 import com.iesvdc.dam.acceso.web.BadRequestException;
+import com.iesvdc.dam.acceso.web.NotFoundException;
 // import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
@@ -28,6 +29,20 @@ public class UsuarioService {
     public Usuario add(Usuario usuario){        
         // usuario.setPassword(new BCryptPasswordEncoder().encode(usuario.getPassword()));
         return usuarioRepository.save(usuario);
+    }
+
+    public Usuario updateById(String id, Usuario usuario) {
+        Optional<Usuario> oUsuario = usuarioRepository.findById(id);
+        if (oUsuario.isPresent()) {
+            usuario.setId(id);
+            return usuarioRepository.save(usuario);
+        } else {
+            throw new NotFoundException("Usuario no encontrado: " + id);
+        }
+    }
+
+    public Usuario updateById(Usuario oldUsuario, Usuario usuario) {
+        return updateById(oldUsuario.getId(), usuario);
     }
 
     public void deleteById(String id) {
