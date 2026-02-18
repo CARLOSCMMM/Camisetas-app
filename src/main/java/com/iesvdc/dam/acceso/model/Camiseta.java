@@ -25,17 +25,17 @@ public class Camiseta {
   private String nombre;
 
   @NotBlank(message = "La Talla es obligatoria")
-  @Pattern(regexp = "El formato de la Talla es: S, M, L, XL")
-  private String Talla;
+  @Pattern(regexp = "^(S|M|L|XL)$", message = "La talla debe ser S, M, L o XL")
+  private String talla;
 
   @NotBlank(message = "El color es obligatorio")
-  private String Color;
+  private String color;
   
   @NotNull(message = "El precio es obligatorio")
   @Positive(message = "El precio debe ser mayor que 0")
-  private double Precio;
+  private double precio;
   
   @NotNull(message = "El stock es obligatorio")
   @Min(value = 0, message = "El stock no puede ser negativo")
-  private int Stock;
+  private int stock;
 }

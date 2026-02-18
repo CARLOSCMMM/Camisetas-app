@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Reservas de Pistas</title>
+  <title>Tienda de Camisetas</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/app.css">
@@ -13,17 +13,17 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <a class="navbar-brand" href="#">Reservas de Pistas</a>
+    <a class="navbar-brand" href="#">Tienda de Camisetas</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="nav">
       <ul class="navbar-nav ms-auto">
-        <li id="menu_instalaciones" class="nav-item"><a class="nav-link" href="#instalaciones">Instalaciones</a></li>
-        <li id="menu_horarios" class="nav-item"><a class="nav-link" href="#horarios">horarios</a></li>
+        <li id="menu_inicio" class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+        <li id="menu_camisetas" class="nav-item"><a class="nav-link" href="#camisetas">Camisetas</a></li>
         <li id="menu_usuarios" class="nav-item"><a class="nav-link" href="#usuarios">Usuarios</a></li>
-        <li id="menu_reservas" class="nav-item"><a class="nav-link" href="#reservas">Reservas</a></li>
+        <li id="menu_pedidos" class="nav-item"><a class="nav-link" href="#pedidos">Pedidos</a></li>
       </ul>
     </div>
   </div>
@@ -31,48 +31,59 @@
 
 <main class="container py-4">
 
-  <!-- Área de alertas -->
+  <!-- Area de alertas -->
   <div id="alerta" class="alert d-none" role="alert"></div>
 
-  <!-- inicio -->
+  <!-- Inicio -->
   <section id="panel_inicio" class="mb-4 panel">
     <div class="card shadow-sm">
       <div class="card-header fw-semibold">Inicio</div>
       <div class="card-body">
-
-        <p>Seleccione una opción del menú para comenzar.</p>
-        <p>Ejemplo de SAP (Single Application Page)</p>
-
+        <p>Seleccione una opcion del menu para comenzar.</p>
+        <p>Panel de gestion para la tienda de camisetas.</p>
+      </div>
+    </div>
   </section>
 
-
-
-
-  <!-- Instalaciones -->
-  <section id="panel_instalaciones" class="mb-4 panel">
+  <!-- Camisetas -->
+  <section id="panel_camisetas" class="mb-4 panel">
     <div class="card shadow-sm">
-      <div class="card-header fw-semibold">Instalaciones</div>
+      <div class="card-header fw-semibold">Camisetas</div>
       <div class="card-body">
 
-        <form id="formInstalacion" class="row g-2 align-items-end">
-          <div class="col-md-4">
-            <label class="form-label">ID</label>
-            <input id="instID" class="form-control">
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Nombre</label>
-            <input id="instNombre" class="form-control" required>
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Dirección</label>
-            <input id="instDireccion" class="form-control" required>
-          </div>
+        <form id="formCamiseta" class="row g-2 align-items-end">
+          <input id="camId" type="hidden">
           <div class="col-md-3">
-            <label class="form-label">Ciudad</label>
-            <input id="instCiudad" class="form-control" required>
+            <label class="form-label">Nombre</label>
+            <input id="camNombre" class="form-control" required>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Talla</label>
+            <select id="camTalla" class="form-select" required>
+              <option value="" disabled selected>Seleccione...</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Color</label>
+            <input id="camColor" class="form-control" required>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Precio</label>
+            <input id="camPrecio" type="number" min="0" step="0.01" class="form-control" required>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Stock</label>
+            <input id="camStock" type="number" min="0" step="1" class="form-control" required>
           </div>
           <div class="col-md-1 d-grid">
-            <button class="btn btn-primary" type="submit">Añadir</button>
+            <button id="btnCamisetaGuardar" class="btn btn-primary" type="submit">Anadir</button>
+          </div>
+          <div class="col-md-2 d-grid">
+            <button id="btnCamisetaCancelar" class="btn btn-outline-secondary d-none" type="button">Cancelar</button>
           </div>
         </form>
 
@@ -83,58 +94,18 @@
             <thead>
               <tr>
                 <th>Nombre</th>
-                <th>Dirección</th>
-                <th>Ciudad</th>
+                <th>Talla</th>
+                <th>Color</th>
+                <th>Precio</th>
+                <th>Stock</th>
                 <th class="text-end">Acciones</th>
               </tr>
             </thead>
-            <tbody id="tablaInstalaciones"></tbody>
+            <tbody id="tablaCamisetas"></tbody>
           </table>
         </div>
 
       </div>
-    </div>
-  </section>
-
-
-  <!-- Horarios -->
-  <section id="panel_horarios" class="mb-4 panel">
-    <div class="card shadow-sm">
-      <div class="card-header fw-semibold">Horarios</div>
-      <div class="card-body">
-        <form id="formHorario" class="row g-2 align-items-end">
-          <div class="col-md-5">
-            <label class="form-label">Instalación</label>
-            <select id="horInstalacion" class="form-select" required></select>
-          </div>
-          <div class="col-md-2">
-            <label class="form-label">Inicio</label>
-            <input id="horHoraInicio" min="00:00:00" max="23:59:59" type="time" class="form-control" required>
-          </div>
-          <div class="col-md-2">
-            <label class="form-label">Fin</label>
-            <input id="horHoraFin" type="time" class="form-control" required>
-          </div>
-          <div class="col-md-1 d-grid">
-            <button class="btn btn-primary" type="submit">Añadir</button>
-          </div>
-        </form>
-        <hr/>
-        <div class="table-responsive">
-          <table class="table table-hover align-middle">
-            <thead>
-              <tr>
-                <th>Nombre Instalacion</th>
-                <th>Hora inicio</th>
-                <th>Hora fin</th>
-                <th class="text-end">Acciones</th>
-              </tr>
-            </thead>
-            <tbody id="tablaHorarios"></tbody>
-          </table>
-        </div>
-      </div>
-      
     </div>
   </section>
 
@@ -145,6 +116,7 @@
       <div class="card-body">
 
         <form id="formUsuario" class="row g-2 align-items-end">
+          <input id="userId" type="hidden">
           <div class="col-md-3">
             <label class="form-label">Nombre</label>
             <input id="userNombre" class="form-control" required>
@@ -157,8 +129,18 @@
             <label class="form-label">Password</label>
             <input id="userPassword" type="password" class="form-control" required>
           </div>
+          <div class="col-md-2">
+            <label class="form-label">Rol</label>
+            <select id="userRol" class="form-select" required>
+              <option value="ADMIN">ADMIN</option>
+              <option value="USER">USER</option>
+            </select>
+          </div>
+          <div class="col-md-1 d-grid">
+            <button id="btnUsuarioGuardar" class="btn btn-primary" type="submit">Anadir</button>
+          </div>
           <div class="col-md-2 d-grid">
-            <button class="btn btn-primary" type="submit">Añadir</button>
+            <button id="btnUsuarioCancelar" class="btn btn-outline-secondary d-none" type="button">Cancelar</button>
           </div>
         </form>
 
@@ -170,6 +152,7 @@
               <tr>
                 <th>Nombre</th>
                 <th>Email</th>
+                <th>Rol</th>
                 <th class="text-end">Acciones</th>
               </tr>
             </thead>
@@ -181,30 +164,25 @@
     </div>
   </section>
 
-  <!-- Reservas -->
-  <section id="panel_reservas" class="panel">
+  <!-- Pedidos -->
+  <section id="panel_pedidos" class="panel">
     <div class="card shadow-sm">
-      <div class="card-header fw-semibold">Reservas</div>
+      <div class="card-header fw-semibold">Pedidos</div>
       <div class="card-body">
 
-        
-        <!-- Alta de reserva -->
-        <form id="formReserva" class="row g-2 align-items-end">
+        <!-- Alta de pedido -->
+        <form id="formPedido" class="row g-2 align-items-end">
           <div class="col-md-4">
             <label class="form-label">Usuario</label>
-            <select id="resUsuario" class="form-select" required></select>
+            <select id="pedUsuario" class="form-select" required></select>
           </div>
-          <div class="col-md-4">
-            <label class="form-label">Horario</label>
-            <select id="resHorario" class="form-select" required></select>
+          <div class="col-md-6">
+            <label class="form-label">Camisetas</label>
+            <select id="pedCamisetas" class="form-select" multiple required></select>
+            <div class="form-text">Use Ctrl o Command para seleccionar varias.</div>
           </div>
-          <div class="col-md-2">
-            <label class="form-label">Día</label>
-            <input id="resDia" type="date" class="form-control" required>
-          </div>
-          
-          <div class="col-12 d-grid mt-2">
-            <button class="btn btn-success" type="submit">Crear reserva</button>
+          <div class="col-md-2 d-grid">
+            <button class="btn btn-success" type="submit">Crear pedido</button>
           </div>
         </form>
 
@@ -214,14 +192,14 @@
           <table class="table table-hover align-middle">
             <thead>
               <tr>
-                <th>Día</th>
-                <th>Horario</th>
-                <th>Instalación</th>
+                <th>Fecha</th>
                 <th>Usuario</th>
+                <th>Items</th>
+                <th>Total</th>
                 <th class="text-end">Acciones</th>
               </tr>
             </thead>
-            <tbody id="tablaReservas"></tbody>
+            <tbody id="tablaPedidos"></tbody>
           </table>
         </div>
 

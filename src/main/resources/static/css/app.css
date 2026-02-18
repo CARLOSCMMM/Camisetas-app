@@ -9,3 +9,7 @@ body {
   top: 1rem;
   z-index: 1020;
 }
+
+.pedido-detalle td {
+  background-color: #f8f9fa;
+}
