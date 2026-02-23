@@ -57,4 +57,60 @@ El tema tiene esta estructura:
 * Front con Bootstrap: estructura y componentes
 * Consumo de API desde JS (jQuery)
 * Caso práctico completo (paso a paso)
-* Extensiones: paginación, búsqueda, logs, Docker, seguridad
+* Extensiones: paginación, búsqueda, logs, Docker, seguridad## Documentacion funcional (capturas)
+
+Este apartado resume el uso de la aplicacion desde la interfaz web.
+
+### CRUD de camisetas
+
+**Listado y busqueda**
+* Vista con la tabla de camisetas.
+* Acciones disponibles por fila: editar y eliminar.
+* Captura: `docs/img/listado-camisetas.png`
+
+**Alta**
+* Boton "Nueva camiseta".
+* Formulario con los campos basicos (nombre, talla, color, precio, stock).
+* Al guardar se actualiza el listado.
+* Captura: `docs/img/listado-camisetas.png`
+
+**Edicion**
+* Desde el listado, boton "Editar".
+* Al guardar, se refresca la fila modificada.
+* Captura: `docs/img/editar-camisetas.png`
+
+**Borrado**
+* Desde el listado, boton "Eliminar" con confirmacion.
+* La camiseta desaparece del listado.
+* Captura: `docs/img/eliminar-camisetas.png`
+
+### CRUD de usuarios
+
+**Listado**
+* Tabla de usuarios con acciones (ver, editar, eliminar).
+* Captura: `docs/img/crud-usuarios.png`
+
+**Alta**
+* Boton "Nuevo usuario" y formulario con datos basicos.
+* Captura: `docs/img/crud-usuarios.png`
+
+**Edicion y borrado**
+* Edicion desde el listado y confirmacion de borrado.
+* Captura: `docs/img/eliminar-editar-usuarios.png`
+
+### Creacion y visualizacion de pedidos (vista maestro-detalle)
+
+**Creacion de pedido**
+* Seleccionar usuario.
+* Anadir camisetas al pedido.
+* Confirmar y guardar el pedido.
+* Captura: `docs/img/vista-pedidos.png`
+
+**Vista maestro-detalle**
+* Maestro: listado de pedidos con usuario, fecha y total.
+* Detalle: al seleccionar un pedido se muestran sus lineas (camiseta, cantidad, precio).
+* Captura: `docs/img/maestro-detalle-pedido.png`
+
+**Cancelacion**
+* Posibilidad de cancelar un pedido si el flujo lo permite.
+* Captura: `docs/img/eliminar-pedido.png`
